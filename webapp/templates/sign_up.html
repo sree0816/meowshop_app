@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<title>Login V8</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static 'booklogin/loginpage/images/icons/favicon.ico' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'booklogin/loginpage/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'booklogin/loginpage/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'booklogin/loginpage/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'booklogin/loginpage/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'booklogin/loginpage/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'booklogin/loginpage/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'booklogin/loginpage/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'booklogin/loginpage/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'booklogin/loginpage/css/main.css' %}">
+<!--===============================================================================================-->
+</head>
+<body>
+
+	<div class="limiter">
+		<div class="container-login100" >
+			<div class="wrap-login100">
+				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178 p-b-100" method="POST" action="#" >
+					{% csrf_token %}
+					<img src="{% static 'booklogin/loginpage/images/logo.png' %}" height="100px" width="100px" class=" m-b-20" style="border-radius:30%;margin-left:35%;">
+					<span class="login100-form-title">
+						Sign Up
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-20" data-validate="Please enter username">
+						<input class="input100" type="text" name="uname" placeholder="Username">
+						<span class="focus-input100"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input m-b-20" data-validate="Please enter email iD">
+						<input class="input100" type="email" name="email" placeholder="email ID">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Please enter password">
+						<input class="input100" type="password" name="password" placeholder="Password">
+						<span class="focus-input100"></span>
+					</div>
+					<div class="container-login100-form-btn m-t-25">
+						<button class="login100-form-button btn btn-success">
+							Sign in
+						</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+<!--===============================================================================================-->
+	<script src="{% static 'booklogin/loginpage/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'booklogin/loginpage/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'booklogin/loginpage/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'booklogin/loginpage/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'booklogin/loginpage/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'booklogin/loginpage/vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'booklogin/loginpage/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'booklogin/loginpage/vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'booklogin/loginpage/js/main.js' %}"></script>
+
+
+</body>
+</html>

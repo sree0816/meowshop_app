@@ -98,4 +98,8 @@ def admin_login(request):
         else:
             return redirect(login_page)
 
+def singlepage(request,pid):
+    product=ProductDB.objects.all(id=pid)
+    return render(request,'single_product.html')
+
 

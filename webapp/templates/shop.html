@@ -76,7 +76,7 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Sign in</a>
+                                <a href="{% url 'sign_in' %}">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>
                             <div class="header__top__hover">
@@ -355,7 +355,10 @@
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                     <h5>{{ i.price }}</h5>
-                                    <div class="product__color__select">
+                                    <a href="{% url 'singlepage' pid=i.id %}">
+                                    <button class="m-t-5 m-b-5 m-l-2 primary-button" style="margin:10px 50px ;background-color:#f5f5dc;border-style:none;border-radius:10px;">view more</button>
+                                    </a>
+                                        <div class="product__color__select">
                                         <label for="pc-7">
                                             <input type="radio" id="pc-7">
                                         </label>

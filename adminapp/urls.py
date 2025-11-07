@@ -14,4 +14,5 @@ urlpatterns=[path('index/',views.index,name='index.html'),
              path('update_product/<int:pid>',views.update_product,name='update_product'),
              path('delete_product/<int:pid>',views.delete_product,name='delete_product'),
              path('login_page/',views.login_page,name='login_page'),
-             path('admin_login/',views.admin_login,name='admin_login')]
+             path('admin_login/',views.admin_login,name='admin_login'),
+             path('singlepage/<int:pid>',views.singlepage,name='singlepage')]
