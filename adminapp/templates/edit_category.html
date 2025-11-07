@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="margin:100px 25%;width:50%;">
+    <div class="card-body" style="padding:20px 30px;background-color:rgb(194, 203, 240);">
+                  <h4 class="card-title text-center"> Edit Category </h4>
+                  <form class="forms-sample" method="POST" action="{% url 'update_category' cid=data.id %}">
+                      {% csrf_token %}
+                    <div class="form-group">
+                      <label for="exampleInputUsername1">category name</label>
+                      <input type="text" value="{{data.name}}" class="form-control" id="exampleInputUsername1" placeholder="name" name="name">
+                    </div>
+                      <div class="form-group">
+                      <label for="exampleInputUsername1">Description</label>
+                      <textarea class="form-control"  placeholder="Description" name="desc">{{data.description}} </textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+</div>
+
+</body>
+</html>
+{% endblock %}

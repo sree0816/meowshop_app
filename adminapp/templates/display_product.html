@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>products</title>
+</head>
+<body>
+<div style="display:block;width:100%;">
+<h2 class="text-center " style="text-align:center;">Product Table</h2>
+
+    <div style="width=100%;" class="mt-4">
+
+
+
+
+            <div class="table-responsive mt-5" style="width:95%;">
+                <table class="table table-striped" >
+                    <thead>
+                    <tr>
+                        <th >
+                            Name
+                        </th>
+                        <th>
+                            price
+                        </th>
+                        <th >
+                            description
+                        </th>
+                        <th>
+                            manufacturers
+                        </th>
+                        <th>
+                            category
+                        </th>
+                        <th>
+                            image
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td>{{i.name}}</td>
+                        <td>{{i.price}}</td>
+                        <td>{{i.description}}</td>
+                        <td>{{i.manufacturer}}</td>
+                        <td>{{i.category}}</td>
+                        <td><img src="{{i.image.url}}" width="100px" height="100px"></td>
+                        <td><a href="{% url 'edit_product' pid=i.id %}">
+                            <button class="btn btn-success">edit</button>
+                        </a>
+                            <a href="{% url 'delete_product' pid=i.id %}" style="padding-left:10px;">
+                                <button class="btn btn-success">delete</button>
+                            </a></td>
+                    </tr>
+
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
+
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
+{% endblock %}

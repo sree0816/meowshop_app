@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>categories</title>
+</head>
+<body>
+<div style="display:inline-block;width:100%;">
+<h2 class="text-center">Category Table</h2>
+<div style="width=100%;margin:100px 10%;">
+
+    <div class="card">
+
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td>{{i.name}}</td>
+                        <td>{{i.description}}</td>
+                        <td><a href="{% url 'edit_category' cid=i.id %}">
+                            <button class="btn btn-success">edit</button>
+                        </a>
+                            <a href="{% url 'delete_category' cid=i.id %}" style="padding-left:10px;">
+                                <button class="btn btn-success">delete</button>
+                            </a></td>
+                    </tr>
+
+                    {% endfor %}
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    </table>
+</div>
+</div>
+
+</body>
+</html>
+{% endblock %}
