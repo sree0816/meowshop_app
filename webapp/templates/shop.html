@@ -76,7 +76,11 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="{% url 'sign_in' %}">Sign in</a>
+                                {% if request.session.name %}
+                <a href="{% url 'user_logout' %}"> Welcome {{request.session.name}} /logout</a>
+                {% else %}
+                <a href="{% url 'sign_in' %}">Sign in</a>
+                {% endif %}
                                 <a href="#">FAQs</a>
                             </div>
                             <div class="header__top__hover">
@@ -356,7 +360,7 @@
                                     </div>
                                     <h5>{{ i.price }}</h5>
                                     <a href="{% url 'singlepage' pid=i.id %}">
-                                    <button class="m-t-5 m-b-5 m-l-2 primary-button" style="margin:10px 50px ;background-color:#f5f5dc;border-style:none;border-radius:10px;">view more</button>
+                                    <button class="m-t-5 m-b-5 m-l-2 primary-button" style="margin:10px 100px ;background-color:#f5f5dc;border-style:none;border-radius:10px;">view more</button>
                                     </a>
                                         <div class="product__color__select">
                                         <label for="pc-7">

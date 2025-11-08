@@ -31,7 +31,7 @@
 	<div class="limiter">
 		<div class="container-login100" >
 			<div class="wrap-login100">
-				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178 p-b-100" method="POST" action="#" >
+				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178 p-b-100" method="POST" action="{% url 'user_login' %}" >
 					{% csrf_token %}
 					<img src="{% static 'booklogin/loginpage/images/logo.png' %}" height="100px" width="100px" class=" m-b-20" style="border-radius:30%;margin-left:35%;">
 					<span class="login100-form-title">
@@ -39,7 +39,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-20" data-validate="Please enter username">
-						<input class="input100" type="text" name="uname" placeholder="Username">
+						<input class="input100" type="text" name="username" placeholder="Username">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -52,7 +52,7 @@
 							Sign in
 						</button>
 					</div>
-					<div class="m-t-20">dont have an account?  <a href="{% url 'sign_in' %}">sign up</a></div>
+					<div class="m-t-25 " style="text-align:center;">dont have an account ?<a href="{% url 'sign_up' %}"> sign up here</a></div>
 
 				</form>
 			</div>

@@ -103,3 +103,6 @@ def singlepage(request,pid):
     return render(request,'single_product.html')
 
 
+
+
+

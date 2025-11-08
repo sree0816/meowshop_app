@@ -36,7 +36,11 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
+                {% if request.session.name %}
+                <a href="{% url 'user_logout' %}">{{request.session.name}} /logout</a>
+                {% else %}
                 <a href="{% url 'sign_in' %}">Sign in</a>
+                {% endif %}
                 <a href="#">FAQs</a>
             </div>
             <div class="offcanvas__top__hover">
@@ -74,7 +78,11 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="{% url 'sign_in' %}">Sign in</a>
+                                {% if request.session.name %}
+                <a href="{% url 'user_logout' %}"> Welcome {{request.session.name}} /logout</a>
+                {% else %}
+                <a href="{% url 'sign_in' %}">Sign in</a>
+                {% endif %}
                                 <a href="#">FAQs</a>
                             </div>
                             <div class="header__top__hover">
@@ -189,7 +197,7 @@
                         </div>
                         <div class="banner__item__text">
                             <h2>Food</h2>
-                            <a href="#">Shop now</a>
+                            <a href="{% url 'shop' %}">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -200,7 +208,7 @@
                         </div>
                         <div class="banner__item__text">
                             <h2>Hygiene</h2>
-                            <a href="#">Shop now</a>
+                            <a href="{% url 'shop' %}">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -211,7 +219,7 @@
                         </div>
                         <div class="banner__item__text">
                             <h2>Pharmacy</h2>
-                            <a href="#">Shop now</a>
+                            <a href="{% url 'shop' %}">Shop now</a>
                         </div>
                     </div>
                 </div>

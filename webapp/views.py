@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from unicodedata import category
 
 from adminapp.models import CategoryDB,ProductDB
+from webapp.models import SignupDB
+
 
 # Create your views here.
 def home(request):
@@ -35,3 +37,35 @@ def singlepage(request,pid):
     product=ProductDB.objects.get(id=pid)
     categories=CategoryDB.objects.all()
     return render(request,'single_product.html',{'product':product,'categories':categories})
+
+def save_signup(request):
+    if request.method=='POST':
+        n=request.POST.get('uname')
+        e=request.POST.get('email')
+        p=request.POST.get('password')
+        c=request.POST.get('confirmpass')
+        obj=SignupDB(name=n,email=e,password=p,confirmpass=c)
+        if SignupDB.objects.filter(name=n).exists():
+            return redirect(sign_up)
+        elif SignupDB.objects.filter(email=e):
+            return redirect(sign_up)
+        else:
+            obj.save()
+            return redirect(sign_in)
+def user_login(request):
+    if request.method=='POST':
+        n=request.POST.get('username')
+        p=request.POST.get('password')
+        if SignupDB.objects.filter(name=n,password=p).exists() :
+            request.session['name']=n
+            request.session['password']=p
+            return redirect(home)
+        else:
+            return redirect(sign_in)
+    else:
+        return redirect(sign_in)
+def user_logout(request):
+    del request.session['name']
+    del request.session['password']
+    return redirect(sign_in)
+
