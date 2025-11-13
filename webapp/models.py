@@ -7,3 +7,9 @@ class SignupDB(models.Model):
     password=models.CharField(max_length=20,blank=True,null=True)
     confirmpass=models.CharField(max_length=20,blank=True,null=True)
 
+class MessageDB(models.Model):
+    name=models.CharField(max_length=20,blank=True,null=True)
+    email=models.EmailField(blank=True,null=True)
+    message=models.CharField(max_length=20,blank=True,null=True)
+
+

@@ -1,8 +1,10 @@
+from tkinter.font import names
+
 from django.shortcuts import render,redirect
 from unicodedata import category
 
 from adminapp.models import CategoryDB,ProductDB
-from webapp.models import SignupDB
+from webapp.models import SignupDB, MessageDB
 
 
 # Create your views here.
@@ -68,4 +70,13 @@ def user_logout(request):
     del request.session['name']
     del request.session['password']
     return redirect(sign_in)
+def save_message(request):
+    if request.method=='POST':
+        n=request.POST.get('name')
+        m=request.POST.get('email')
+        message=request.POST.get('message')
+        obj=MessageDB(name=n,email=m,message=message)
+        obj.save()
+    return redirect(contact)
+
 

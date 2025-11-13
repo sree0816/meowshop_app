@@ -256,7 +256,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>{{ i.price }}</h6>
+                            <h6>{{ i.name }}</h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
@@ -265,7 +265,7 @@
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>$67.24</h5>
+                            <h5>Rs. {{i.price}}</h5>
                             <a href="{% url 'singlepage' pid=i.id %}">
                                     <button class="m-t-5 m-b-5 m-l-2 primary-button" style="margin:10px 50px ;background-color:#f5f5dc;border-style:none;border-radius:10px;">view more</button>
                                     </a>
