@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>messages</title>
+</head>
+<body>
+<div style="display:block;width:100%;">
+<h2 class="text-center " style="text-align:center;">Message Table</h2>
+
+    <div style="width=100%;" class="mt-4">
+
+
+
+
+            <div class="table-responsive mt-5" style="width:95%;">
+                <table class="table table-striped" >
+                    <thead>
+                    <tr>
+                        <th >
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th >
+                            Message
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td>{{i.name}}</td>
+                        <td>{{i.email}}</td>
+                        <td>{{i.message}}</td>
+
+                        <td><a href="{% url 'delete_message' mid=i.id %}" style="padding-left:10px;">
+                                <button class="btn btn-success">delete</button>
+                            </a></td>
+                    </tr>
+
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
+
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
+{% endblock %}

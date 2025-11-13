@@ -5,6 +5,7 @@ import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from adminapp.models import CategoryDB, ProductDB
+from webapp.models import MessageDB
 
 
 # Create your views here.
@@ -102,7 +103,12 @@ def singlepage(request,pid):
     product=ProductDB.objects.all(id=pid)
     return render(request,'single_product.html')
 
+def view_messages(request):
+    data=MessageDB.objects.all()
+    return render(request,'display_messages.html',{'data':data})
 
-
-
+def delete_message(request,mid):
+    data=MessageDB.objects.get(id=mid)
+    data.delete()
+    return redirect(view_messages)
 

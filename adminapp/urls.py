@@ -15,4 +15,6 @@ urlpatterns=[path('index/',views.index,name='index.html'),
              path('delete_product/<int:pid>',views.delete_product,name='delete_product'),
              path('login_page/',views.login_page,name='login_page'),
              path('admin_login/',views.admin_login,name='admin_login'),
-             path('singlepage/<int:pid>',views.singlepage,name='singlepage')]
+             path('singlepage/<int:pid>',views.singlepage,name='singlepage'),
+             path('view_messages/',views.view_messages,name='view_messages'),
+             path('delete_message/<int:mid>',views.delete_message,name='delete_message')]
