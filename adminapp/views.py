@@ -112,3 +112,4 @@ def delete_message(request,mid):
     data.delete()
     return redirect(view_messages)
 
+

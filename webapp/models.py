@@ -12,4 +12,11 @@ class MessageDB(models.Model):
     email=models.EmailField(blank=True,null=True)
     message=models.CharField(max_length=20,blank=True,null=True)
 
+class CartDB(models.Model):
+    quantity=models.IntegerField(blank=True,null=True)
+    totalprice=models.IntegerField(blank=True,null=True)
+    bookname=models.CharField(max_length=30,blank=True,null=True)
+    bookprice=models.IntegerField(blank=True,null=True)
+    username=models.CharField(max_length=20,blank=True,null=True)
+
 
