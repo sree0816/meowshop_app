@@ -82,3 +82,6 @@ def save_message(request):
 def cart(request):
     return render(request,'cart.html')
 
+def checkout(request):
+    return render(request,'checkout.html')
+
