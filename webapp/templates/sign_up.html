@@ -31,7 +31,7 @@
 	<div class="limiter">
 		<div class="container-login100" >
 			<div class="wrap-login100">
-				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178 p-b-100" method="POST" action="{% url 'save_signup' %}" >
+				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178 p-b-100" method="POST" action="{% url 'save_signup' %}" name="myform" onsubmit="validation()">
 					{% csrf_token %}
 					<img src="{% static 'booklogin/loginpage/images/logo.png' %}" height="100px" width="100px" class=" m-b-20" style="border-radius:30%;margin-left:35%;">
 					<span class="login100-form-title">
@@ -84,6 +84,44 @@
 	<script src="{% static 'booklogin/loginpage/vendor/countdowntime/countdowntime.js' %}"></script>
 <!--===============================================================================================-->
 	<script src="{% static 'booklogin/loginpage/js/main.js' %}"></script>
+
+<script src = "jquery-3.6.0.js" ></script>
+<script>
+	function validation()
+	{
+	x=document.myform.uname.value;
+	y=document.myform.email.value;
+	z=document.myform.password.value;
+	k=document.myform.confirmpass.value;
+
+	if(x=='' || x==null)
+	{
+		alert("username cant be null");
+	}
+	else if(y=='' || y==null)
+	{
+		alert("email cant be empty");
+	}
+	else if(z=='' || z==null)
+	{
+		alert("password cant be empty");
+	}
+
+	else if(k=='' || k==null)
+	{
+		alert("confirm password cant be empty");
+	}
+	else if (z==k)
+	{
+	 return true;
+	}
+	else {
+	alert("passwords doesnt match");
+	}
+	}
+
+
+</script>
 
 
 </body>

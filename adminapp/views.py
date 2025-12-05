@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from adminapp.models import CategoryDB, ProductDB
 from webapp.models import MessageDB
+from django.contrib import messages
 
 
 # Create your views here.
@@ -22,6 +23,7 @@ def save_category(request):
         d=request.POST.get('desc')
         obj=CategoryDB(name=n,description=d)
         obj.save()
+        messages.success(request,'category added successfully')
     return redirect(add_category)
 def display_category(request):
     data=CategoryDB.objects.all()
@@ -34,10 +36,12 @@ def update_category(request,cid):
         n=request.POST.get('name')
         d=request.POST.get('desc')
         CategoryDB.objects.filter(id=cid).update(name=n,description=d)
+        messages.success(request,'category updated successfully')
     return redirect(display_category)
 def delete_category(request,cid):
     data=CategoryDB.objects.get(id=cid)
     data.delete()
+    messages.success(request,'category deleted successfully..')
     return redirect(display_category)
 
 def add_product(request):
@@ -53,6 +57,7 @@ def save_product(request):
         i=request.FILES['image']
         obj=ProductDB(name=n,price=p,description=d,manufacturer=m,image=i,category=c)
         obj.save()
+        messages.success(request,'product added successfully')
     return redirect(add_product)
 def display_product(request):
     data=ProductDB.objects.all()
@@ -75,10 +80,12 @@ def update_product(request,pid):
         except MultiValueDictKeyError:
             file=ProductDB.objects.get(id=pid).image
         ProductDB.objects.filter(id=pid).update(name=n,price=p,description=d,manufacturer=m,image=file,category=c)
+        messages.success(request,'product updated successfully..')
     return redirect(display_product)
 def delete_product(request,pid):
     data=ProductDB.objects.get(id=pid)
     data.delete()
+    messages.success(request,'product deleted successfully')
     return redirect(display_product)
 def login_page(request):
     return render(request,'login.html')

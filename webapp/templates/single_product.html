@@ -260,13 +260,13 @@
                                 <form>
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="number" value="1" name="quantity">
+                                        <input type="number"  name="quantity" id="quantity">
                                     </div>
                                 </div>
                                   <input type="text" name="productname" value="{{product.name}}">
-                                    <input type="text" name="price" value="{{product.price}}">
+                                    <input type="text" name="price" value="{{product.price}}" id="price" min="1">
                                     <input type="text" name="username" value="{{ request.session.name }}">
-                                <input type="text" name="total price" class="primary-btn" placeholder="total price">
+                                <input type="text" name="total_price" class="primary-btn" placeholder="total price" id="total">
                                     <a href="#" class="primary-btn"><button type="submit">add to cart</button></a>
                                 </form>
 
@@ -650,6 +650,17 @@
     <script src="{% static 'home/js/mixitup.min.js'%}"></script>
     <script src="{% static 'home/js/owl.carousel.min.js'%}"></script>
     <script src="{% static 'home/js/main.js'%}"></script>
+    <script>
+        $(document).ready(function(){
+		$("#quantity").change(function(){
+			x=document.getElementById("quantity").value;
+                y=document.getElementById("price").value;
+                result=x*y;
+                document.getElementById("total").value=result;
+		})
+
+	})
+    </script>
 </body>
 </html>
 
