@@ -15,8 +15,10 @@ class MessageDB(models.Model):
 class CartDB(models.Model):
     quantity=models.IntegerField(blank=True,null=True)
     totalprice=models.IntegerField(blank=True,null=True)
-    bookname=models.CharField(max_length=30,blank=True,null=True)
-    bookprice=models.IntegerField(blank=True,null=True)
+    productname=models.CharField(max_length=30,blank=True,null=True)
+    productprice=models.IntegerField(blank=True,null=True)
     username=models.CharField(max_length=20,blank=True,null=True)
+    productimage=models.ImageField(upload_to='product_images',null=True,blank=True)
+
 
 

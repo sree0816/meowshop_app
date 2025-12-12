@@ -1,10 +1,10 @@
-from tkinter.font import names
+
 
 from django.shortcuts import render,redirect
 from unicodedata import category
 
 from adminapp.models import CategoryDB,ProductDB
-from webapp.models import SignupDB, MessageDB
+from webapp.models import SignupDB, MessageDB, CartDB
 
 
 # Create your views here.
@@ -84,4 +84,18 @@ def cart(request):
 
 def checkout(request):
     return render(request,'checkout.html')
+
+def save_cart(request):
+    if request.method=='POST':
+        name=request.POST.get('productname')
+        quantity=int(request.POST.get('quantity'))
+        price=int(request.POST.get('price'))
+        username=request.POST.get('username')
+        tp=request.POST.get('total_price')
+
+        product=ProductDB.objects.filter(name=name).first()
+        img=product.image if product else None
+        obj=CartDB(quantity=quantity,productname=name,totalprice=tp,productprice=price,username=username,productimage=img)
+        obj.save()
+        return redirect(home)
 

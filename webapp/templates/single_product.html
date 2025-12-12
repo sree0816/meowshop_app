@@ -257,18 +257,23 @@
 <!--                                </div>-->
 <!--                            </div>-->
                             <div class="product__details__cart__option">
-                                <form>
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="number"  name="quantity" id="quantity">
-                                    </div>
-                                </div>
-                                  <input type="text" name="productname" value="{{product.name}}">
-                                    <input type="text" name="price" value="{{product.price}}" id="price" min="1">
-                                    <input type="text" name="username" value="{{ request.session.name }}">
-                                <input type="text" name="total_price" class="primary-btn" placeholder="total price" id="total">
-                                    <a href="#" class="primary-btn"><button type="submit">add to cart</button></a>
+                            {% if request.session.name %}
+                                <form method="POST" action="{% url 'save_cart' %}">
+                                    {% csrf_token %}
+                                        <input type="number"  name="quantity" id="quantity" placeholder="quantity">
+
+                                  <input type="hidden" name="productname" value="{{product.name}}" id="productname">
+                                    <input type="hidden" name="price" value="{{product.price}}" id="price" min="1">
+                                    <input type="hidden" name="username" value="{{ request.session.name }}" id="username" placeholder="username">
+                                <input type="hidden" name="total_price"  placeholder="total price" id="total">
+                                    <button type="submit" class="btn-primary">add to cart</button>
+
                                 </form>
+                                {% else %}
+                                    <a href="{% url 'user_login' %}" class="primary-btn"><button type="submit">Login now</button></a>
+                                {% endif %}
+
+
 
                             </div>
                             <div class="product__details__btns__option">
@@ -653,14 +658,18 @@
     <script>
         $(document).ready(function(){
 		$("#quantity").change(function(){
-			x=document.getElementById("quantity").value;
-                y=document.getElementById("price").value;
+			x=parseInt(document.getElementById("quantity").value);
+                y=parseInt(document.getElementById("price").value);
                 result=x*y;
                 document.getElementById("total").value=result;
 		})
 
 	})
+
+
+
     </script>
+
 </body>
 </html>
 
