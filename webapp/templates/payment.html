@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+	<title>BookShop</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="author" content="">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'web/css/normalize.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'web/icomoon/icomoon.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'web/css/vendor.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'web/style.css'%}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .payment-container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .payment-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .payment-header h2 {
+            font-weight: 600;
+        }
+
+        .payment-method {
+            border: 2px solid #e5e5e5;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .active-method {
+            border-color: #0d6efd;
+            background: #e9f2ff;
+        }
+
+        .btn-pay {
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 12px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="header-wrap">
+
+		<div class="top-content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="social-links">
+							<ul>
+								<li>
+									<a href="#"><i class="icon icon-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="icon icon-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="icon icon-youtube-play"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="icon icon-behance-square"></i></a>
+								</li>
+							</ul>
+						</div><!--social-links-->
+					</div>
+					<div class="col-md-6">
+						<div class="right-element">
+							{% if request.session.name %}
+							<a href="{% url 'user_logout' %}" class="user-account for-buy"><i
+									class="icon icon-user"></i><span> Welcome {{request.session.name}}/ Logout</span></a>
+							<a href="{% url 'cart' %}" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Cart:{{ cart_total }}</span></a>
+
+							{% else %}
+							<a href="{% url 'sign_in' %}" class="user-account for-buy"><i
+									class="icon icon-user"></i><span>sign In</span></a>
+
+
+							{% endif %}
+
+							<div class="action-menu">
+
+								<div class="search-bar">
+									<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+										<i class="icon icon-search"></i>
+									</a>
+									<form role="search" method="get" class="search-box">
+										<input class="search-field text search-input" placeholder="Search"
+											type="search">
+									</form>
+								</div>
+							</div>
+
+						</div><!--top-right-->
+					</div>
+
+				</div>
+			</div>
+		</div><!--top-content-->
+
+		<header id="header">
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col-md-2">
+						<div class="main-logo">
+							<a href="index.html"><img src="{% static 'web/images/main-logo.png'%}" alt="logo"></a>
+						</div>
+
+					</div>
+
+					<div class="col-md-10">
+
+						<nav id="navbar">
+							<div class="main-menu stellarnav">
+								<ul class="menu-list">
+									<li class="menu-item active"><a href="{% url 'home' %}">Home</a></li>
+									<li><a href="{% url 'about' %}">About</a></li>
+									<li class="menu-item has-sub">
+										<a href="#pages" class="nav-link">Categories</a>
+
+										<ul>
+											{% for i in categories %}
+											<li class="active"><a href="{% url 'filtered' cat=i.name %}">{{ i.name }}</a></li>
+											{% endfor %}
+										</ul>
+
+									</li>
+									<li class="menu-item"><a href="{% url 'contact' %}" class="nav-link">Contact us</a></li>
+
+								</ul>
+
+								<div class="hamburger">
+									<span class="bar"></span>
+									<span class="bar"></span>
+									<span class="bar"></span>
+								</div>
+
+							</div>
+						</nav>
+
+					</div>
+
+				</div>
+			</div>
+		</header>
+
+	</div><!--header-wrap-->
+	{% block content %}
+
+    <div class="payment-container">
+
+        <div class="payment-header">
+            <h2>Payment Page</h2>
+            <p class="text-muted">Choose payment method and enter your details</p>
+        </div>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <!-- Visible total amount -->
+            <div class="mb-4">
+                <label class="form-label">Total Amount (₹)</label>
+                <input type="text" name="total_amount" class="form-control"
+                       value="{{ cart_sum }}" readonly>
+            </div>
+
+            <h5>Select Payment Method</h5>
+
+            <div class="payment-method mt-3 active-method" id="cardMethod">
+                <input type="radio" name="method" value="card" checked> <strong> Credit / Debit Card</strong>
+            </div>
+
+            <div class="payment-method mt-2" id="codMethod">
+                <input type="radio" name="method" value="cod"> <strong> Cash on Delivery</strong>
+            </div>
+
+
+            <!-- Card Payment Fields (Visible) -->
+            <div id="cardBox" class="mt-4">
+
+                <div class="mb-3">
+                    <label class="form-label">Card Holder Name</label>
+                    <input type="text" class="form-control" name="card_name" placeholder="John Doe">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Card Number</label>
+                    <input type="text" class="form-control" name="card_number" maxlength="16"
+                           placeholder="1234 5678 9012 3456">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Expiry Date</label>
+                        <input type="month" class="form-control" name="expiry">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">CVV</label>
+                        <input type="password" class="form-control" name="cvv" maxlength="3"
+                               placeholder="123">
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-pay mt-4">Pay Now</button>
+
+        </form>
+
+    </div>
+
+{% endblock %}
+	<footer id="footer">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-md-4">
+
+					<div class="footer-item">
+						<div class="company-brand">
+							<p>Blend the world of curiosity and imagination with yours through our books...</p>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-md-2">
+
+					<div class="footer-menu">
+						<h5>About Us</h5>
+						<ul class="menu-list">
+							<li class="menu-item">
+								<a href="{% url 'about' %}">vision</a>
+							</li>
+							<li class="menu-item">
+								<a href="{% url 'about' %}">articles </a>
+							</li>
+
+						</ul>
+					</div>
+
+				</div>
+				<div class="col-md-2">
+
+					<div class="footer-menu">
+						<h5>Discover</h5>
+						<ul class="menu-list">
+							<li class="menu-item">
+								<a href="{% url 'home' %}">Home</a>
+							</li>
+
+						</ul>
+					</div>
+
+				</div>
+				<div class="col-md-2">
+
+					<div class="footer-menu">
+						<h5>My account</h5>
+						<ul class="menu-list">
+							<li class="menu-item">
+								<a href="{% url 'sign_in' %}">Sign In</a>
+							</li>
+							<li class="menu-item">
+								<a href="#">View Cart</a>
+							</li>
+							<li class="menu-item">
+								<a href="#">My Wishtlist</a>
+							</li>
+							<li class="menu-item">
+								<a href="#">Track My Order</a>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+				<div class="col-md-2">
+
+					<div class="footer-menu">
+						<h5>Help</h5>
+						<ul class="menu-list">
+
+
+							<li class="menu-item">
+								<a href="{% url 'contact' %}">Contact us</a>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+
+			</div>
+			<!-- / row -->
+
+		</div>
+	</footer>
+
+	<div id="footer-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<div class="copyright">
+						<div class="row">
+
+							<div class="col-md-6">
+								<p>© 2025 All rights reserved. Bookabae
+							</div>
+
+							<div class="col-md-6">
+								<div class="social-links align-right">
+									<ul>
+										<li>
+											<a href="#"><i class="icon icon-facebook"></i></a>
+										</li>
+										<li>
+											<a href="#"><i class="icon icon-twitter"></i></a>
+										</li>
+										<li>
+											<a href="#"><i class="icon icon-youtube-play"></i></a>
+										</li>
+										<li>
+											<a href="#"><i class="icon icon-behance-square"></i></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</div><!--grid-->
+
+				</div><!--footer-bottom-content-->
+			</div>
+		</div>
+	</div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        // Show/hide card details based on selection
+        $("input[name='method']").change(function () {
+
+            if ($(this).val() === "card") {
+                $("#cardBox").slideDown();
+                $("#cardMethod").addClass("active-method");
+                $("#codMethod").removeClass("active-method");
+
+            } else {
+                $("#cardBox").slideUp();
+                $("#cardMethod").removeClass("active-method");
+                $("#codMethod").addClass("active-method");
+            }
+        });
+
+    </script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="rzp_test_0ib0jPwwZ7I1lT"
+    data-amount="{{payy_str}}"
+    data-currency="INR"
+    data-order_id="{{payment.order_id}}"
+    data-buttontext=""
+    data-name="GoodHarvest"
+    data-description="Your description"
+    data-image=""
+    data-prefill.name="abc"
+    data-prefill.email="abc@gmail.com"
+    data-theme.color="#002f8c"
+ >
+</script>
+
+</body>
+
+</html>

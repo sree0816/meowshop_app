@@ -4,7 +4,9 @@ from django.shortcuts import render,redirect
 
 
 from adminapp.models import CategoryDB,ProductDB
-from webapp.models import SignupDB, MessageDB, CartDB
+from webapp.models import SignupDB, MessageDB, CartDB,CheckoutDB
+from django.db.models import Sum
+import razorpay
 
 
 # Create your views here.
@@ -12,7 +14,10 @@ def home(request):
     categories=CategoryDB.objects.all()
     products=ProductDB.objects.all()
     categories = CategoryDB.objects.all()
-    data = CartDB.objects.filter(username=request.session['name'])
+    if 'name' not in request.session:
+        return redirect('user_login')
+    else:
+        data = CartDB.objects.filter(username=request.session['name'])
     cart_total = 0
     uname = request.session.get('name')
     if uname:
@@ -146,8 +151,6 @@ def cart(request):
         total_amount=sub_total+del_charge
     return render(request,'cart.html',{'categories':categories,'cart_total':cart_total,'data':data,'sub_total':sub_total,'del_charge':del_charge,'total_amount':total_amount})
 
-def checkout(request):
-    return render(request,'checkout.html')
 
 def save_cart(request):
     if request.method=='POST':
@@ -166,3 +169,69 @@ def delete_cart(request,pid):
     pro=CartDB.objects.get(id=pid)
     pro.delete()
     return redirect(cart)
+def checkout(request):
+    categories=CategoryDB.objects.all()
+    books = CartDB.objects.filter(username=request.session['name'])
+    cart_total = 0
+    uname = request.session.get('name')
+    if uname:
+        cart_total = CartDB.objects.filter(username=uname).count()
+
+        # calculating total amount for cart
+
+        sub_total = 0
+        delivery_charge = 0
+        total_amount = 0
+        for i in books:
+            sub_total += i.totalprice
+            if sub_total > 500 and sub_total < 1000:
+                delivery_charge = 50
+            elif sub_total > 1000:
+                delivery_charge = 0
+            else:
+                delivery_charge = 100
+
+            total_amount = sub_total + delivery_charge
+    return render(request,'checkout.html',{'categories':categories,'books':books,'cart_total':cart_total,'sub_total':sub_total,'delivery_charge':delivery_charge,'total_amount':total_amount})
+
+def save_checkout(request):
+    if request.method=="POST":
+        fn=request.POST.get('fname')
+        ln=request.POST.get('lname')
+        email=request.POST.get('email')
+        add=request.POST.get('address')
+        city=request.POST.get('city')
+        state=request.POST.get('state')
+        pin=request.POST.get('pin')
+        total=request.POST.get('total')
+        obj=CheckoutDB(fname=fn,lname=ln,email=email,address=add,city=city,state=state,pin=pin,total=total)
+        obj.save()
+    return redirect(payment)
+
+def payment(request):
+    # fetching the details of books added by the respective user
+    books = CartDB.objects.filter(username=request.session['name'])
+    cart_total = 0
+    uname = request.session.get('name')
+    if uname:
+        cart_total = CartDB.objects.filter(username=uname).count()
+        cartt_sum = CartDB.objects.filter(username=uname).aggregate(total=Sum('totalprice'))
+        cart_sum=cartt_sum['total']
+
+        #adding details for payment
+#        retireve data from orderdb
+
+    customer=CheckoutDB.objects.order_by('-id').first()
+
+     #get amount
+    payy=customer.total
+    amount=int(payy*100)
+    payy_str=str(amount)
+    if request.method=='POST':
+        order_currency='INR'
+        client = razorpay.Client(auth=('rzp_test_0ib0jPwwZ7I1lT', 'VjHNO5zKeKxz8PYe7VnzwxMR'))
+        payment=client.order.create({'amount':amount,'currency':order_currency})
+
+
+
+    return render(request,'payment.html',{'cart_total':cart_total,'payy_str':payy_str,'cart_sum':cart_sum})
