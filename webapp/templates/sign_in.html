@@ -31,7 +31,7 @@
 	<div class="limiter">
 		<div class="container-login100" >
 			<div class="wrap-login100">
-				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178 p-b-100" method="POST" action="{% url 'user_login' %}" >
+				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178 p-b-100" method="POST" action="{% url 'user_login' %}" name="myform" onsubmit="validaion()">
 					{% csrf_token %}
 					<img src="{% static 'booklogin/loginpage/images/logo.png' %}" height="100px" width="100px" class=" m-b-20" style="border-radius:30%;margin-left:35%;">
 					<span class="login100-form-title">
@@ -39,12 +39,12 @@
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-20" data-validate="Please enter username">
-						<input class="input100" type="text" name="username" placeholder="Username">
+						<input class="input100" type="text" name="username" placeholder="Username" id="username">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Please enter password">
-						<input class="input100" type="password" name="password" placeholder="Password">
+						<input class="input100" type="password" name="password" placeholder="Password" id="password">
 						<span class="focus-input100"></span>
 					</div>
 					<div class="container-login100-form-btn m-t-25">
@@ -76,6 +76,24 @@
 	<script src="{% static 'booklogin/loginpage/vendor/countdowntime/countdowntime.js' %}"></script>
 <!--===============================================================================================-->
 	<script src="{% static 'booklogin/loginpage/js/main.js' %}"></script>
+<script>
+	Function validation(){
+	x=document.myform.username.value;
+	y=document.myform.password.value;
+	if (x==""|| x=="null")
+		{
+		alert("name cant be null");
+		}
+
+	else if (y==""|| y=="null")
+		{
+		alert("password cant be null");
+		}
+	else{ return true }
+
+	}
+
+</script>
 
 
 </body>
